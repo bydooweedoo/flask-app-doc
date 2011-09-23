@@ -1,0 +1,49 @@
+<html>
+  <head>
+    <title>Project documentation</title>
+    <link rel="stylesheet" type="text/css" href="/doc/static/resources/css/bootstrap.min.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/doc/static/resources/images/favicon.ico" />
+  </head>
+  <body style="width: 900px; margin: 0 auto; padding-top: 40px;">
+    <section id="navigation">
+      <div class="topbar-wrapper" style="z-index: 5;">
+	<div class="topbar">
+	  <div class="topbar-inner">
+            <div class="container">
+              <a class="brand" href="#">Empire</a>
+              <ul class="nav">
+		{% for section in sections %}
+		<li><a href="#{{ section }}">{{ section|capitalize }}</a></li>
+		{% endfor %}
+              </ul>
+            </div>
+	  </div>
+	</div>
+      </div>
+      <div style="width: 100%; margin: 10px auto;">
+	{% for section in sections %}
+	<span class="label success" id="{{ section }}">{{ section|capitalize }}</span>
+	<br /><br />
+	<table class="zebra-striped">
+	  <thead>
+	    <tr>
+	      <th style="width:30%;">Url</th>
+	      <th style="width:70%;">Documentation</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    {% for rule in rules %}
+	    {% if rule.section == section %}
+	    <tr id="{{ rule.url }}">
+	      <td><code>{{ rule.url }}</code></td>
+	      <td><pre>{{ rule.doc }}</pre></td>
+	    </tr>
+	    {% endif %}
+	    {% endfor %}
+	  </tbody>
+	</table>
+	{% endfor %}
+      </div>
+    </section>
+  </body>
+</html>
