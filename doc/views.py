@@ -2,8 +2,7 @@
 Web HTTP routes documentation generator.
 """
 from operator import itemgetter
-from flask import Blueprint, render_template, abort
-from jinja2 import TemplateNotFound
+from flask import Blueprint, render_template
 from yourapp import __app__
 
 
@@ -41,8 +40,4 @@ def get_doc():
                           'doc': get_rule_doc(rule)})
     sections.sort()
     rules.sort(key=itemgetter('url'))
-    print repr(rules)
-    try:
-        return render_template('rules.html', rules=rules, sections=sections)
-    except TemplateNotFound:
-        abort(404)
+    return render_template('rules.html', rules=rules, sections=sections)
