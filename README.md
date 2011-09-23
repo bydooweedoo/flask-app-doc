@@ -1,7 +1,7 @@
 # flask-app-doc
 
-Quick use
-=========
+Quick usage
+===========
 
 Replace in views.py
 
@@ -13,5 +13,5 @@ by
 
 and add in your app.py
 
-    	from doc.views import __documentation__
-    	__app__.register_blueprint(__documentation__)
+	from doc.views import __documentation__
+	__app__.register_blueprint(__documentation__)

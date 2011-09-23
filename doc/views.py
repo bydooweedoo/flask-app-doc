@@ -6,11 +6,11 @@ from flask import Blueprint, render_template
 from yourapp import __app__
 
 
-__documentation__ = Blueprint('doc', __name__, \
-                                  url_prefix='/doc', \
-                                  template_folder='templates', \
-                                  static_folder='static', \
-                                  static_url_path='/static')
+__documentation__ = Blueprint('doc', __name__,
+                              url_prefix='/doc',
+                              template_folder='templates',
+                              static_folder='static',
+                              static_url_path='/static')
 
 
 def get_rule_doc(rule):
@@ -18,7 +18,7 @@ def get_rule_doc(rule):
     Return documentation from given rule.
     """
     views = __app__.view_functions
-    if views.get(rule.endpoint) is not None:
+    if views.get(rule.endpoint):
         return views.get(rule.endpoint).__doc__.lstrip()
     return ''
 
@@ -35,9 +35,9 @@ def get_doc():
         section = rule.rule.split('/')[1]
         if section not in sections:
             sections.append(section)
-        rules.append({'url': rule.rule, \
-                          'section': section, \
-                          'doc': get_rule_doc(rule)})
+        rules.append({'url': rule.rule,
+                      'section': section,
+                      'doc': get_rule_doc(rule)})
     sections.sort()
     rules.sort(key=itemgetter('url'))
     return render_template('rules.html', rules=rules, sections=sections)
