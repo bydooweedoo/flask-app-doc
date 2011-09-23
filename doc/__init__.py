@@ -1,3 +1,4 @@
 """
-Empire project.
+flask-app-doc
+-------------
 """

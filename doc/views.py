@@ -1,4 +1,7 @@
 """
+flask-app-doc
+-------------
+
 Web HTTP routes documentation generator.
 """
 from operator import itemgetter
@@ -20,7 +23,7 @@ def get_rule_doc(rule):
     views = __app__.view_functions
     if views.get(rule.endpoint):
         return views.get(rule.endpoint).__doc__.lstrip()
-    return ''
+    return
 
 
 
@@ -37,7 +40,7 @@ def get_doc():
             sections.append(section)
         rules.append({'url': rule.rule,
                       'section': section,
-                      'doc': get_rule_doc(rule)})
+                      'doc': get_rule_doc(rule) or ''})
     sections.sort()
     rules.sort(key=itemgetter('url'))
     return render_template('rules.html', rules=rules, sections=sections)
