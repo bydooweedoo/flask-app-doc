@@ -5,36 +5,21 @@ flask-app-doc
 Web HTTP routes documentation generator.
 """
 from operator import itemgetter
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, current_app
 
 
-class DocBlueprint(Blueprint):
-    """
-    Documentation blueprint.
-    """
-    app = None
-
-    def register(self, app, options, first_registration=False):
-        """
-        Override register to save given app.
-        """
-        DocBlueprint.app = app
-        return super(DocBlueprint,
-                     self).register(app, options, first_registration)
-
-
-__documentation__ = DocBlueprint('doc', __name__,
-                                 url_prefix='/doc',
-                                 template_folder='templates',
-                                 static_folder='static',
-                                 static_url_path='/static')
+__documentation__ = Blueprint('doc', __name__,
+                              url_prefix='/doc',
+                              template_folder='templates',
+                              static_folder='static',
+                              static_url_path='/static')
 
 
 def get_rule_doc(rule):
     """
     Return documentation from given rule.
     """
-    views = DocBlueprint.app.view_functions
+    views = current_app.view_functions
     if views.get(rule.endpoint):
         return views.get(rule.endpoint).__doc__.lstrip()
     return
@@ -48,7 +33,7 @@ def get_doc():
     """
     rules = []
     sections = []
-    for rule in DocBlueprint.app.url_map.iter_rules():
+    for rule in current_app.url_map.iter_rules():
         section = rule.rule.split('/')[1]
         if section not in sections:
             sections.append(section)
